@@ -20,3 +20,8 @@ services:
       - ./tmp/data:/data
       - ./tmp/keys/host:/var/rsync/host
       - ./tmp/keys/clients:/var/rsync/clients:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x sshd >/dev/null"]
+      interval: 3s
+      timeout: 2s
+      retries: 60
