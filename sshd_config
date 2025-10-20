@@ -2,6 +2,7 @@ Port 22
 Protocol 2
 
 PubkeyAuthentication yes
+AuthenticationMethods publickey
 AuthorizedKeysFile /etc/ssh/authorized_keys/%u
 
 HostKey /etc/ssh/ssh_host_ecdsa_key
@@ -28,3 +29,5 @@ GatewayPorts no
 
 LoginGraceTime 10
 UseDNS no
+
+MaxAuthTries 3
