@@ -48,6 +48,8 @@ rsync -av -e 'ssh -p 2222 -i keys/clients/test' ./test-data test@localhost:/
 ```bash
 docker run -d \
   --name rsync \
+  --cap-drop=ALL \
+  --cap-add=CHOWN --cap-add=FOWNER --cap-add=SETUID --cap-add=SETGID --cap-add=SYS_CHROOT \
   -p 2222:22 \
   -v /path/to/data:/data \
   -v /path/to/host-keys:/var/rsync/host \

@@ -1,5 +1,13 @@
 services:
   rsync:
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - FOWNER
+      - SETUID
+      - SETGID
+      - SYS_CHROOT
     build: .
     ports:
       - "2222:22"
