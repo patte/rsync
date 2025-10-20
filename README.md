@@ -53,6 +53,6 @@ docker run -d \
   -p 2222:22 \
   -v /path/to/data:/data \
   -v /path/to/host-keys:/var/rsync/host \
-  -v /path/to/client-keys:/var/rsync/clients \
+  -v /path/to/client-keys:/var/rsync/clients:ro \
   ghcr.io/patte/rsync
 ```
