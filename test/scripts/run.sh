@@ -98,7 +98,7 @@ test $rc -eq 0
 
 # 7a) rsync data and verify it's correctly written (existence + byte-for-byte match)
 log "Push data via rsync"
-rsync -av -e "ssh -p ${PORT} -i ${KEY} ${SSH_OPTS}" ./fixtures/test-data/ ${USER}@localhost:/
+rsync -av --no-perms --no-owner --no-group -e "ssh -p ${PORT} -i ${KEY} ${SSH_OPTS}" ./fixtures/test-data/ ${USER}@localhost:/
 
 log "Verify files exist and match source"
 test -f tmp/data/test-file.txt
