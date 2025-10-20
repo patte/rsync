@@ -6,6 +6,7 @@ COMPOSE    := docker compose -f docker-compose.test.yml
 
 keys:
 	mkdir -p tmp/keys/clients tmp/keys/host
+	chmod 0777 tmp/keys/host
 	test -f tmp/keys/clients/test || ssh-keygen -t ed25519 -f tmp/keys/clients/test -N ""
 	# Also generate a second user key to test multiple users
 	test -f tmp/keys/clients/test2 || ssh-keygen -t ed25519 -f tmp/keys/clients/test2 -N ""
