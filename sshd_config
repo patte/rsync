@@ -1,0 +1,30 @@
+Port 22
+Protocol 2
+
+PubkeyAuthentication yes
+AuthorizedKeysFile /etc/ssh/authorized_keys/%u
+
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+LogLevel INFO
+
+PrintLastLog no
+PermitUserEnvironment no
+PermitUserRC no
+Banner none
+
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+ChallengeResponseAuthentication no
+PermitRootLogin no
+UsePAM no
+PrintMotd no
+PermitTunnel no
+AllowTcpForwarding no
+X11Forwarding no
+PermitTTY no
+GatewayPorts no
+
+LoginGraceTime 10
+UseDNS no

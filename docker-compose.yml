@@ -1,0 +1,8 @@
+services:
+  rsync:
+    build: .
+    ports:
+      - "2222:22"
+    volumes:
+      - ./data:/data
+      - ./keys:/var/rsync
