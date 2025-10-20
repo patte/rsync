@@ -29,6 +29,7 @@ HOST_KEY_DIR="/var/rsync/host"
 CLIENT_KEYS_DIR="/var/rsync/clients"
 
 # Generate SSH host keys if they don’t exist
+mkdir -p "$HOST_KEY_DIR"
 [[ -f "$HOST_KEY_DIR/ssh_host_ecdsa_key" ]]   || ssh-keygen -q -t ecdsa -b 256 -f "$HOST_KEY_DIR/ssh_host_ecdsa_key" -N ""
 [[ -f "$HOST_KEY_DIR/ssh_host_ed25519_key" ]] || ssh-keygen -q -t ed25519 -f "$HOST_KEY_DIR/ssh_host_ed25519_key" -N ""
 ln -sf "$HOST_KEY_DIR/ssh_host_ecdsa_key"   /etc/ssh/ssh_host_ecdsa_key
@@ -38,6 +39,7 @@ ln -sf "$HOST_KEY_DIR/ssh_host_ed25519_key.pub" /etc/ssh/ssh_host_ed25519_key.pu
 
 install -d -m 755 -o root -g root /etc/ssh/authorized_keys
 
+# Process client public keys
 shopt -s nullglob
 FOUND=0
 for keyfile in $CLIENT_KEYS_DIR/*.pub; do
