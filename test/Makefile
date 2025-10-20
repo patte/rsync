@@ -11,7 +11,7 @@ keys:
 data:
 	mkdir -p fixtures/test-data tmp/data
 	test -f fixtures/test-data/test-file.txt || echo "This is a test file." > fixtures/test-data/test-file.txt
-	@test -f fixtures/test-data/large-file.bin || dd if=/dev/urandom of=fixtures/test-data/large-file.bin bs=1m count=1
+	@test -f fixtures/test-data/large-file.bin || dd if=/dev/urandom of=fixtures/test-data/large-file.bin bs=1048576 count=1
 
 up: keys
 	$(COMPOSE) build
