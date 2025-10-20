@@ -1,0 +1,22 @@
+services:
+  rsync:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: rsync:test
+    cap_drop: ["ALL"]
+    cap_add:
+      - CHOWN
+      - FOWNER
+      - SETUID
+      - SETGID
+      - SYS_CHROOT
+    environment:
+      - FS_UID=1234
+      - FS_GID=1234
+    ports:
+      - "2122:22"
+    volumes:
+      - ./tmp/data:/data
+      - ./tmp/keys/host:/var/rsync/host
+      - ./tmp/keys/clients:/var/rsync/clients:ro
