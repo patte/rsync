@@ -7,6 +7,7 @@ Features:
 - [x] openssh-server with hardened sshd config
 - [x] rsync (and python3-minimal) installed
 - [x] forced command to restrict users to `/usr/bin/rrsync /data`
+- [x] `FS_UID` and `FS_GID` to control the ownership of files created by clients
 - [x] on startup:
   - host keys are generated if none are found in `/var/rsync/host`
   - local users and authorized_keys are generated based on keys in `/var/rsync/clients/*.pub`
@@ -38,7 +39,7 @@ docker compose build && docker compose down && docker compose up
 ```
 
 ```bash
-rsync -av -e 'ssh -p 2222 -i keys/clients/test' ./test-data test@localhost:/
+rsync -av -e 'ssh -p 2222 -i keys/clients/test' ./test-data/ test@localhost:/
 ```
 
 ## Usage
