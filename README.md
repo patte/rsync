@@ -48,7 +48,7 @@ rsync -av -e 'ssh -p 2222 -i keys/clients/test' ./test-data/ test@localhost:/
 ## Usage
 
 ### Docker
-
+Example docker run:
 ```bash
 docker run -d \
   --name rsync \
@@ -59,4 +59,27 @@ docker run -d \
   -v /path/to/host-keys:/var/rsync/host \
   -v /path/to/client-keys:/var/rsync/clients:ro \
   ghcr.io/patte/rsync
+```
+
+### quadlet
+Example podman quadlet: rsync.container
+```ini
+[Unit]
+After=network.target
+
+[Container]
+Image=ghcr.io/patte/rsync:main
+AutoUpdate=registry
+Volume=/path/to/keys/rsync/keys:/var/rsync
+Volume=/path/to/data/:/data/
+PublishPort=2222:22
+PublishPort=[::]:2222:22
+Environment=FS_UID=1001
+Environment=FS_GID=1001
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
 ```
