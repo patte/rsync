@@ -119,4 +119,18 @@ else
   test "$UGID_BIN" = "${EXPECT_UID}:${EXPECT_GID}"
 fi
 
+# 8) second user can connect and push data
+USER2="${USER2_NAME:-test2}"
+KEY2="tmp/keys/clients/test2"
+SSH2="ssh -p ${PORT} -i ${KEY2} ${SSH_OPTS} ${USER2}@localhost"
+
+log "Second user can push via rsync"
+# Push only a single small file into a separate subdirectory to avoid overwriting files from first user
+rsync -av -e "ssh -p ${PORT} -i ${KEY2} ${SSH_OPTS}" ./fixtures/test-data/test-file.txt ${USER2}@localhost:/test2/
+
+log "Verify second user's file exists and matches source"
+test -f tmp/data/test2/test-file.txt
+cmp -s fixtures/test-data/test-file.txt tmp/data/test2/test-file.txt
+
+
 log "All checks passed ✔"

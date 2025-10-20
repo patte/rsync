@@ -51,10 +51,11 @@ for keyfile in $CLIENT_KEYS_DIR/*.pub; do
   FOUND=1
 
   # Create or update user
+  # Use -o to allow non-unique UIDs so multiple users can share FS_UID
   if id "$user" >/dev/null 2>&1; then
-    usermod -u "$FS_UID" -g "$FS_GID" -s /bin/sh -d /emptyhome "$user" || true
+    usermod -o -u "$FS_UID" -g "$FS_GID" -s /bin/sh -d /emptyhome "$user" || true
   else
-    useradd -M -u "$FS_UID" -g "$FS_GID" -s /bin/sh -d /emptyhome "$user"
+    useradd -M -o -u "$FS_UID" -g "$FS_GID" -s /bin/sh -d /emptyhome "$user"
   fi
 
   # Ensure the account is *unlocked* by setting a real, random hash
