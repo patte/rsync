@@ -21,6 +21,25 @@ Image:
 ghcr.io/patte/rsync
 ```
 
+## Controlling file ownership (FS_UID/FS_GID)
+
+FS_UID and FS_GID let you control which numeric user and group ID own files written to /data by any authenticated client.
+
+- Defaults: FS_UID=1000 and FS_GID=1000 if not set.
+- Shared across users: All SSH users created from /var/rsync/clients/*.pub share the same FS_UID/FS_GID. At the filesystem level, their writes are indistinguishable by user; use SSH logs if you need per-user auditing.
+- Non-root only: The container will refuse to start if either FS_UID or FS_GID is 0.
+
+Choosing values
+- If you bind-mount a host directory to /data on a Linux host, set FS_UID/FS_GID to the numeric uid:gid you want to see on the host for created files (for example, your host user and group IDs).
+- Existing files in the mounted directory are not modified; changing FS_UID/FS_GID later won’t rewrite ownership. Use chown on the host if you need to migrate existing data.
+
+Recommended rsync options:
+Because the process that actually handles the rsync/rrsync session inside the container runs as FS_UID:FS_GID it's not allowed to set arbitrary permissions or ownership on created files.
+Therefore, when sending data it's recommended to disable preserving permissions, owner and group. For example:
+```bash
+rsync -a --no-perms --no-owner --no-group -e "ssh -p 2222 -i keys/clients/test" ./test-data/ test@localhost:/
+```
+
 ## Development
 
 Generate client keys for testing:
