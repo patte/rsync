@@ -1,5 +1,7 @@
 # rsync
 
+<a href="https://github.com/patte/rsync/actions"><img src="https://github.com/patte/rsync/actions/workflows/test.yml/badge.svg" alt="Tests" height="18"></a>
+
 Small and secure container to provide rsync access to a shared `/data` volume using SSH keys for authentication.
 
 Features:
@@ -12,6 +14,7 @@ Features:
   - host keys are generated if none are found in `/var/rsync/host`
   - local users and authorized_keys are generated based on keys in `/var/rsync/clients/*.pub`
 - [x] GitHub Action to build (daily) and push the image to ghcr.io
+- [x] Test harness using docker-compose in `test/` 
 
 Image:
 ```
