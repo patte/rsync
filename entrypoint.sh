@@ -12,6 +12,12 @@ FS_UID="${FS_UID:-1000}"
 FS_GID="${FS_GID:-1000}"
 FS_GROUP="${FS_GROUP:-datausers}"
 
+# Refuse to run as root
+if [ "$FS_UID" -eq 0 ] || [ "$FS_GID" -eq 0 ]; then
+  echo "Refusing to run with FS_UID/FS_GID = 0" >&2
+  exit 1
+fi
+
 # Ensure group with FS_GID
 if getent group "$FS_GID" >/dev/null; then
   FS_GROUP="$(getent group "$FS_GID" | cut -d: -f1)"
